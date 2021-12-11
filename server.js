@@ -150,13 +150,13 @@ app.post("/login", async (req, res) => {
 
 // student homepage authriztion route
 
-app.get("/studenthomepage", Auth, (req, res) => {
+app.get("/studenthomepage", (req, res) => {
   res.render(path.join(__dirname, "/views", "StudentHomePage"));
 });
 
 // teacher homepage authriztion route
 
-app.get("/teacherhomepage", Auth, (req, res) => {
+app.get("/teacherhomepage", (req, res) => {
   res.render(path.join(__dirname, "/views", "TeacherHomePage"));
 });
 
