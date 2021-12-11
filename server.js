@@ -13,7 +13,7 @@ var cookies = require("cookie-parser");
 const Auth = require("./middleware/auth");
 const router = express.Router();
 
-mongoose.connect("mongodb://localhost:27017/login-app-db", {
+mongoose.connect("mongodb+srv://mk277:Parachute299@cluster0.mjfk6.mongodb.net/deliv3?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
