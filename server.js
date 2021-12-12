@@ -12,6 +12,7 @@ require("dotenv").config();
 var cookies = require("cookie-parser");
 const Auth = require("./middleware/auth");
 const router = express.Router();
+const autho=  process.env.SECRET_JWT;
 
 mongoose.connect("mongodb+srv://mk277:Parachute299@cluster0.mjfk6.mongodb.net/deliv3?retryWrites=true&w=majority", {
   useNewUrlParser: true,
@@ -108,7 +109,7 @@ app.post("/login", async (req, res) => {
     if (email === "admin" && password == "user") {
       const token = await jwt.sign(
         { id: "userisadmin" },
-        process.env.SECRET_JWT
+       autho
       );
       res
         .cookie("token", token, {
@@ -130,7 +131,7 @@ app.post("/login", async (req, res) => {
         } else {
           const token = await jwt.sign(
             { id: user._id },
-            process.env.SECRET_JWT
+            autho
           );
           res
             .cookie("token", token, {
