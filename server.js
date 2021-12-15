@@ -14,7 +14,7 @@ const Auth = require("./middleware/auth");
 const router = express.Router();
 const autho=  process.env.SECRET_JWT;
 
-mongoose.connect("mongodb+srv://username:Password@cluster0.mjfk6.mongodb.net/deliv3?retryWrites=true&w=majority", {
+mongoose.connect("mongodb+srv://mk277:Parachute299@cluster0.mjfk6.mongodb.net/deliv3?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
