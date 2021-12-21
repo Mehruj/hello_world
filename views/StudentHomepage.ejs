@@ -10,8 +10,8 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/mycss.css" />
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="../css/mycss.css" />
     <script src="./js/logout.js"></script>
   </head>
 
@@ -22,7 +22,7 @@
         style="background-color: hsl(335, 92%, 43%)"
       >
         <img
-          src="images/chalkboardlogo.jpg"
+          src="../images/chalkboardlogo.jpg"
           alt="Logo"
           class="logo"
           height="70"
@@ -44,34 +44,39 @@
     <main>
       <h2>All of My Classes:</h2>
       <p>Click on a class to see class info, current assignments, and more!</p>
-      <img src="images/studentstudy.jfif" alt="studentstudy" />
+      <img src="../images/studentstudy.jfif" alt="studentstudy" />
       <div class="list-group">
         <table class="table table-striped">
           <thead>
             <tr>
+              <th scope="col">No.of</th>
               <th scope="col">Class Number</th>
               <th scope="col">Class Name</th>
+              <th scope="col">Enroll Request</th>
             </tr>
           </thead>
           <tbody>
+            <% if(data.length>0){ var i=0;data.forEach(function(d){%>
             <tr>
-              <td>Math 325</td>
+              <th scope="row"><%= (i+1) %></th>
+              <td><%= d.courseId%></td>
               <td>
-                <a href="/studentcertainclass">Introduction to arithmetic</a>
+                <a href="/StudentCertainClass"> <%= d.courseName%> </a>
+              </td>
+              <td>
+                <input
+                  type="button"
+                  value="Send request"
+                  onclick="enrollRequest(`<%= d.courseId%>`);"
+                  class="btn btn-success"
+                />
               </td>
             </tr>
+            <% i++; }) %> <% } else{ %>
             <tr>
-              <td>English 300</td>
-              <td>
-                <a href="/studentsearchclass"
-                  >Introduction to Modern Literature</a
-                >
-              </td>
+              <td colspan="3">No course available</td>
             </tr>
-            <tr>
-              <td>History 325</td>
-              <td><a href="/studentcertainclass">The Civil War</a></td>
-            </tr>
+            <% } %>
           </tbody>
         </table>
       </div>
@@ -102,5 +107,36 @@
         </ul>
       </footer>
     </main>
+    <script>
+      async function enrollRequest(data) {
+        window.onload = () => {
+          console.log("hello...");
+        };
+        var courseId = data;
+        var path = this.pathname || window.location.pathname;
+        var studentId = path.split("/").pop();
+        const BData = { studid: studentId, cid: courseId };
+        await fetch("/studentenrollrequest", {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(BData),
+        })
+          .then((res) => res.json())
+          .then((result) => {
+            console.log(result);
+            if (result.status === "Record Saved...") {
+              alert("Success");
+              window.location.reload();
+            } else {
+              console.log(result.status);
+              alert(result.status);
+            }
+          })
+          .catch((error) => console.log(error));
+      }
+    </script>
   </body>
 </html>
